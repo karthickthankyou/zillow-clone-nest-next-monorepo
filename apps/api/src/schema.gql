@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Item {
+  """
+  ID
+  """
+  id: Int!
+}
+
+type Query {
+  items: [Item!]!
+  item(id: Int!): Item!
+}
+
+type Mutation {
+  createItem(createItemInput: CreateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+  removeItem(id: Int!): Item!
+}
+
+input CreateItemInput {
+  """
+  Example field (placeholder)
+  """
+  id: Int!
+}
+
+input UpdateItemInput {
+  id: Int!
+}
