@@ -13,7 +13,8 @@
     "@nrwl/nx-cloud": "latest",
     "npm-run-all": "^4.1.5",
     "nx": "15.4.2",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "husky": "^8.0.0"
   },
   "scripts": {
     "prettier": "prettier  \"{apps,libs}/**/*.{ts,tsx,js,json}\" --ignore-path .gitignore",
@@ -21,6 +22,7 @@
     "format:write": "yarn prettier --write",
     "lint": "yarn nx run-many --target=lint",
     "tsc": "yarn nx run-many --target=tsc",
-    "validate": "run-p format:check lint tsc"
+    "validate": "run-p format:check lint tsc",
+    "prepare": "husky install"
   }
 }
