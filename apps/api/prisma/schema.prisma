@@ -15,3 +15,121 @@ model Item {
     name     String?
     quantity Int?
 }
+
+model Seller {
+    uid       String   @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    properties Property[]
+    messages   Message[]
+}
+
+model Buyer {
+    uid       String   @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    interests UserHome[]
+    messages  Message[]
+    views     View[]
+}
+
+model Agent {
+    uid       String   @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    properties Property[]
+    messages   Message[]
+}
+
+model Property {
+    id          Int      @id @default(autoincrement())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now())
+    lat         Float
+    lng         Float
+    description String?
+    lotSize     Int
+    features    String?
+    city        String
+    state       String
+    facts       String?
+    style       Style
+    address     String
+    priceSqft   Int?
+    sqft        Int
+    price       Int
+    beds        Int?
+    bath        Int?
+    yearBuilt   Int
+    zipcode     String
+    imgs        String[]
+    plan        Int      @default(0)
+    published   Boolean  @default(true)
+
+    seller    Seller     @relation(fields: [sellerUid], references: [uid])
+    sellerUid String
+    agents    Agent[]
+    userHomes UserHome[]
+    messages  Message[]
+    views     View[]
+}
+
+enum Style {
+    Condo
+    SingleFamilyHome
+    Townhouse
+    Coop
+    Unknown
+    Apartment
+    MultiFamily
+    MobileManufactured
+    FarmRanch
+    LotLand
+}
+
+model Message {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+    message   String
+
+    propertyId Int
+    property   Property @relation(fields: [propertyId], references: [id])
+
+    buyer     Buyer?  @relation(fields: [buyerUid], references: [uid])
+    buyerUid  String?
+    agent     Agent?  @relation(fields: [agentUid], references: [uid])
+    agentUid  String?
+    seller    Seller? @relation(fields: [sellerUid], references: [uid])
+    sellerUid String?
+}
+
+model UserHome {
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @default(now())
+    propertyId Int
+    property   Property     @relation(fields: [propertyId], references: [id])
+    type       UserHomeType
+    buyer      Buyer        @relation(fields: [buyerUid], references: [uid])
+    buyerUid   String
+
+    @@id([buyerUid, propertyId])
+}
+
+enum UserHomeType {
+    WISHLISTED
+    REMOVED_FROM_WISHLIST
+}
+
+model View {
+    id         Int      @id @default(autoincrement())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+    property   Property @relation(fields: [propertyId], references: [id])
+    propertyId Int
+    buyer      Buyer    @relation(fields: [buyerUid], references: [uid])
+    buyerUid   String
+}
