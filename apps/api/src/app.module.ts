@@ -6,6 +6,7 @@ import { join } from 'path'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ItemModule } from './item/item.module'
+import { PrismaModule } from './common/prisma/prisma.module'
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ import { ItemModule } from './item/item.module'
         numberScalarMode: 'integer',
       },
     }),
+    PrismaModule,
+
     ItemModule,
   ],
   controllers: [AppController],

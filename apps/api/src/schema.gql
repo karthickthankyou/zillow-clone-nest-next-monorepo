@@ -4,11 +4,13 @@
 
 type Item {
   id: Int!
+  name: String!
+  quantity: Int!
 }
 
 type Query {
   items: [Item!]!
-  item(id: Int!): Item!
+  item(id: Int!): Item
 }
 
 type Mutation {
@@ -18,10 +20,12 @@ type Mutation {
 }
 
 input CreateItemInput {
-  """Example field (placeholder)"""
-  id: Int!
+  name: String!
+  quantity: Int!
 }
 
 input UpdateItemInput {
+  name: String
+  quantity: Int
   id: Int!
 }

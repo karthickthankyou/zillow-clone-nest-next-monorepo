@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateItemInput } from './dto/create-item.input'
 import { UpdateItemInput } from './dto/update-item.input'
 
 @Injectable()
 export class ItemService {
+  constructor(private readonly prisma: PrismaService) {}
   create(createItemInput: CreateItemInput) {
-    return 'This action adds a new item'
+    return this.prisma.item.create({ data: createItemInput })
   }
 
   findAll() {
-    return [{ id: 2 }, { id: 3 }]
+    return this.prisma.item.findMany()
   }
 
   findOne(id: number) {
-    return { id: 23 }
+    return this.prisma.item.findUnique({ where: { id } })
   }
 
   update(id: number, updateItemInput: UpdateItemInput) {
-    return `This action updates a #${id} item`
+    return this.prisma.item.update({ data: updateItemInput, where: { id } })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} item`
+    return this.prisma.item.delete({ where: { id } })
   }
 }

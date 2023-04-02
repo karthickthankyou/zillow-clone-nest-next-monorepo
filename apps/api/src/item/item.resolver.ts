@@ -18,7 +18,7 @@ export class ItemResolver {
     return this.itemService.findAll()
   }
 
-  @Query(() => Item, { name: 'item' })
+  @Query(() => Item, { name: 'item', nullable: true })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.itemService.findOne(id)
   }
