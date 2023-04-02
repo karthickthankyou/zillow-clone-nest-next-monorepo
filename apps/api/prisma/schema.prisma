@@ -125,11 +125,17 @@ enum UserHomeType {
 }
 
 model View {
-    id         Int      @id @default(autoincrement())
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @default(now())
-    property   Property @relation(fields: [propertyId], references: [id])
+    id         Int             @id @default(autoincrement())
+    createdAt  DateTime        @default(now())
+    updatedAt  DateTime        @default(now())
+    property   Property        @relation(fields: [propertyId], references: [id])
     propertyId Int
-    buyer      Buyer    @relation(fields: [buyerUid], references: [uid])
+    buyer      Buyer           @relation(fields: [buyerUid], references: [uid])
     buyerUid   String
+    unwanted   UnwantedTable[]
+}
+
+model UnwantedTable {
+    id   Int    @id @default(autoincrement())
+    View View[]
 }
