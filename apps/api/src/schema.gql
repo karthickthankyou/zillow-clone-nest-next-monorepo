@@ -2,30 +2,878 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Item {
+type Agent {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  messages: [GroupedMessages!]!
+  properties: [Property!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Message {
+  buyerUid: String
+  agentUid: String
+  sellerUid: String
   id: Int!
-  name: String!
-  quantity: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String!
+  propertyId: Int!
+  property: Property!
+  buyer: Buyer
+  agent: Agent
+  seller: Seller
+}
+
+type GroupedMessages {
+  propertyId: Int!
+  messages: [Message!]!
+}
+
+type Property {
+  description: String
+  features: String
+  facts: String
+  style: Style
+  priceSqft: Int
+  beds: Int
+  bath: Int
+  sellerUid: String!
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  lat: Int!
+  lng: Int!
+  lotSize: Int!
+  city: String!
+  state: String!
+  address: String!
+  sqft: Int!
+  price: Int!
+  yearBuilt: Int!
+  zipcode: String!
+  imgs: [String!]!
+  plan: Int!
+  published: Boolean!
+  seller: Seller!
+  agents: [Agent!]!
+  userHomes: [UserHome!]!
+  messages: [Message!]!
+  views: [View!]!
+}
+
+enum Style {
+  Condo
+  SingleFamilyHome
+  Townhouse
+  Coop
+  Unknown
+  Apartment
+  MultiFamily
+  MobileManufactured
+  FarmRanch
+  LotLand
+}
+
+type Buyer {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  messages: [GroupedMessages!]!
+  views: [View!]!
+  interests: [UserHome!]!
+}
+
+type View {
+  propertyId: Int!
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  buyerUid: String!
+  property: Property!
+  buyer: Property!
+}
+
+type UserHome {
+  type: UserHomeType!
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  propertyId: Int!
+  buyerUid: String!
+  property: Property!
+  buyer: Property!
+}
+
+enum UserHomeType {
+  WISHLISTED
+  REMOVED_FROM_WISHLIST
+}
+
+type Seller {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  properties: [Property!]!
+  messages: [GroupedMessages!]!
+}
+
+type LocationStats {
+  type: LocationStatsType
+  id: Int!
+  totalHomes: Int!
+  lat: Int!
+  lng: Int!
+  priceSqft: Int!
+}
+
+enum LocationStatsType {
+  city
+  state
+}
+
+type BedPrice {
+  id: Int!
+  avg: Int!
+  beds: String!
+  count: Int!
+  sqftAvg: Int!
+  locationStatsId: Int!
 }
 
 type Query {
-  items: [Item!]!
-  item(id: Int!): Item
+  sellers(where: SellerWhereInput, orderBy: [SellerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [SellerScalarFieldEnum!]): [Seller!]!
+  seller(where: SellerWhereUniqueInput): Seller!
+  buyers(where: BuyerWhereInput, orderBy: [BuyerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [BuyerScalarFieldEnum!]): [Buyer!]!
+  buyer(where: BuyerWhereUniqueInput): Buyer!
+  agents(where: AgentWhereInput, orderBy: [AgentOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [AgentScalarFieldEnum!]): [Agent!]!
+  agent(where: AgentWhereUniqueInput): Agent!
+  properties(where: PropertyWhereInput, orderBy: [PropertyOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [PropertyScalarFieldEnum!]): [Property!]!
+  property(where: PropertyWhereUniqueInput): Property!
+  messages(where: MessageWhereInput, orderBy: [MessageOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [MessageScalarFieldEnum!]): [Message!]!
+  message(where: MessageWhereUniqueInput): Message!
+  userHomes(where: UserHomeWhereInput, orderBy: [UserHomeOrderByWithRelationInput!], cursor: UserHomeWhereUniqueInput, take: Int, skip: Int, distinct: [UserHomeScalarFieldEnum!]): [UserHome!]!
+  userHome(where: UserHomeWhereUniqueInput): UserHome!
+  views(where: ViewWhereInput, orderBy: [ViewOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [ViewScalarFieldEnum!]): [View!]!
+  view(where: ViewWhereUniqueInput): View!
+  locationStats(where: LocationStatsWhereInput, orderBy: [LocationStatsOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [LocationStatsScalarFieldEnum!]): [LocationStats!]!
+  locationStat(where: LocationStatsWhereUniqueInput): LocationStats!
+  bedPrices(where: BedPriceWhereInput, orderBy: [BedPriceOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [BedPriceScalarFieldEnum!]): [BedPrice!]!
+  bedPrice(where: BedPriceWhereUniqueInput): BedPrice!
+}
+
+input SellerWhereInput {
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  properties: PropertyListRelationFilter
+  messages: MessageListRelationFilter
+  AND: [SellerWhereInput!]
+  OR: [SellerWhereInput!]
+  NOT: [SellerWhereInput!]
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: String
+  mode: QueryMode
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input DateTimeFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+}
+
+input PropertyListRelationFilter {
+  every: PropertyWhereInput
+  some: PropertyWhereInput
+  none: PropertyWhereInput
+}
+
+input PropertyWhereInput {
+  style: EnumStyleFilter
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  lat: IntFilter
+  lng: IntFilter
+  description: StringFilter
+  lotSize: IntFilter
+  features: StringFilter
+  city: StringFilter
+  state: StringFilter
+  facts: StringFilter
+  address: StringFilter
+  priceSqft: IntFilter
+  sqft: IntFilter
+  price: IntFilter
+  beds: IntFilter
+  bath: IntFilter
+  yearBuilt: IntFilter
+  zipcode: StringFilter
+  imgs: StringListFilter
+  plan: IntFilter
+  published: BoolFilter
+  sellerUid: StringFilter
+  seller: SellerRelationFilter
+  agents: AgentListRelationFilter
+  userHomes: UserHomeListRelationFilter
+  messages: MessageListRelationFilter
+  views: ViewListRelationFilter
+  AND: [PropertyWhereInput!]
+  OR: [PropertyWhereInput!]
+  NOT: [PropertyWhereInput!]
+}
+
+input EnumStyleFilter {
+  equals: Style
+  in: [Style!]
+  notIn: [Style!]
+  not: Style
+}
+
+input IntFilter {
+  equals: Int
+  in: Int
+  notIn: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: Int
+}
+
+input StringListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input SellerRelationFilter {
+  is: SellerWhereInput
+  isNot: SellerWhereInput
+}
+
+input AgentListRelationFilter {
+  every: AgentWhereInput
+  some: AgentWhereInput
+  none: AgentWhereInput
+}
+
+input AgentWhereInput {
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  properties: PropertyListRelationFilter
+  messages: MessageListRelationFilter
+  AND: [AgentWhereInput!]
+  OR: [AgentWhereInput!]
+  NOT: [AgentWhereInput!]
+}
+
+input MessageListRelationFilter {
+  every: MessageWhereInput
+  some: MessageWhereInput
+  none: MessageWhereInput
+}
+
+input MessageWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  message: StringFilter
+  propertyId: IntFilter
+  buyerUid: StringFilter
+  agentUid: StringFilter
+  sellerUid: StringFilter
+  property: PropertyRelationFilter
+  buyer: BuyerRelationFilter
+  agent: AgentRelationFilter
+  seller: SellerRelationFilter
+  AND: [MessageWhereInput!]
+  OR: [MessageWhereInput!]
+  NOT: [MessageWhereInput!]
+}
+
+input PropertyRelationFilter {
+  is: PropertyWhereInput
+  isNot: PropertyWhereInput
+}
+
+input BuyerRelationFilter {
+  is: BuyerWhereInput
+  isNot: BuyerWhereInput
+}
+
+input BuyerWhereInput {
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  interests: UserHomeListRelationFilter
+  messages: MessageListRelationFilter
+  views: ViewListRelationFilter
+  AND: [BuyerWhereInput!]
+  OR: [BuyerWhereInput!]
+  NOT: [BuyerWhereInput!]
+}
+
+input UserHomeListRelationFilter {
+  every: UserHomeWhereInput
+  some: UserHomeWhereInput
+  none: UserHomeWhereInput
+}
+
+input UserHomeWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  propertyId: IntFilter
+  type: UserHomeType
+  buyerUid: StringFilter
+  property: PropertyRelationFilter
+  buyer: BuyerRelationFilter
+  AND: [UserHomeWhereInput!]
+  OR: [UserHomeWhereInput!]
+  NOT: [UserHomeWhereInput!]
+}
+
+input ViewListRelationFilter {
+  every: ViewWhereInput
+  some: ViewWhereInput
+  none: ViewWhereInput
+}
+
+input ViewWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  propertyId: IntFilter
+  buyerUid: StringFilter
+  property: PropertyRelationFilter
+  buyer: BuyerRelationFilter
+  AND: [ViewWhereInput!]
+  OR: [ViewWhereInput!]
+  NOT: [ViewWhereInput!]
+}
+
+input AgentRelationFilter {
+  is: AgentWhereInput
+  isNot: AgentWhereInput
+}
+
+input SellerOrderByWithRelationInput {
+  uid: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  properties: PropertyOrderByRelationAggregateInput
+  messages: MessageOrderByRelationAggregateInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input PropertyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input MessageOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WhereUniqueInputUid {
+  uid: String
+}
+
+enum SellerScalarFieldEnum {
+  uid
+  createdAt
+  updatedAt
+}
+
+input SellerWhereUniqueInput {
+  uid: String
+}
+
+input BuyerOrderByWithRelationInput {
+  uid: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  interests: UserHomeOrderByRelationAggregateInput
+  messages: MessageOrderByRelationAggregateInput
+  views: ViewOrderByRelationAggregateInput
+}
+
+input UserHomeOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ViewOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+enum BuyerScalarFieldEnum {
+  uid
+  createdAt
+  updatedAt
+}
+
+input BuyerWhereUniqueInput {
+  uid: String
+}
+
+input AgentOrderByWithRelationInput {
+  uid: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  properties: PropertyOrderByRelationAggregateInput
+  messages: MessageOrderByRelationAggregateInput
+}
+
+enum AgentScalarFieldEnum {
+  uid
+  createdAt
+  updatedAt
+}
+
+input AgentWhereUniqueInput {
+  uid: String
+}
+
+input PropertyOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  lat: SortOrder
+  lng: SortOrder
+  description: SortOrder
+  lotSize: SortOrder
+  features: SortOrder
+  city: SortOrder
+  state: SortOrder
+  facts: SortOrder
+  style: SortOrder
+  address: SortOrder
+  priceSqft: SortOrder
+  sqft: SortOrder
+  price: SortOrder
+  beds: SortOrder
+  bath: SortOrder
+  yearBuilt: SortOrder
+  zipcode: SortOrder
+  imgs: SortOrder
+  plan: SortOrder
+  published: SortOrder
+  sellerUid: SortOrder
+  seller: SortOrder
+  agents: AgentOrderByRelationAggregateInput
+  userHomes: UserHomeOrderByRelationAggregateInput
+  messages: MessageOrderByRelationAggregateInput
+  views: ViewOrderByRelationAggregateInput
+}
+
+input AgentOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WhereUniqueInputNumber {
+  id: Int
+}
+
+enum PropertyScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  lat
+  lng
+  description
+  lotSize
+  features
+  city
+  state
+  facts
+  style
+  address
+  priceSqft
+  sqft
+  price
+  beds
+  bath
+  yearBuilt
+  zipcode
+  imgs
+  plan
+  published
+  sellerUid
+}
+
+input PropertyWhereUniqueInput {
+  id: Int
+}
+
+input MessageOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  message: SortOrder
+  propertyId: SortOrder
+  buyerUid: SortOrder
+  agentUid: SortOrder
+  sellerUid: SortOrder
+  property: PropertyOrderByWithRelationInput
+  buyer: BuyerOrderByWithRelationInput
+  agent: AgentOrderByWithRelationInput
+  seller: SellerOrderByWithRelationInput
+}
+
+enum MessageScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  message
+  propertyId
+  buyerUid
+  agentUid
+  sellerUid
+}
+
+input MessageWhereUniqueInput {
+  id: Int
+}
+
+input UserHomeOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  propertyId: SortOrder
+  type: SortOrder
+  buyerUid: SortOrder
+  property: PropertyOrderByWithRelationInput
+  buyer: BuyerOrderByWithRelationInput
+}
+
+input UserHomeWhereUniqueInput {
+  buyerUid_propertyId: UserHomeBuyerUidPropertyIdCompoundUniqueInput
+}
+
+input UserHomeBuyerUidPropertyIdCompoundUniqueInput {
+  buyerUid: String
+  propertyId: Int
+}
+
+enum UserHomeScalarFieldEnum {
+  createdAt
+  updatedAt
+  propertyId
+  type
+  buyerUid
+}
+
+input ViewOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  propertyId: SortOrder
+  buyerUid: SortOrder
+  property: PropertyOrderByWithRelationInput
+  buyer: BuyerOrderByWithRelationInput
+}
+
+enum ViewScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  propertyId
+  buyerUid
+}
+
+input ViewWhereUniqueInput {
+  id: Int
+}
+
+input LocationStatsWhereInput {
+  id: IntFilter
+  totalHomes: IntFilter
+  lat: IntFilter
+  lng: IntFilter
+  priceSqft: IntFilter
+  type: LocationStatsType
+  bedsPrice: BedPriceListRelationFilter
+  AND: [LocationStatsWhereInput!]
+  OR: [LocationStatsWhereInput!]
+  NOT: [LocationStatsWhereInput!]
+}
+
+input BedPriceListRelationFilter {
+  every: BedPriceWhereInput
+  some: BedPriceWhereInput
+  none: BedPriceWhereInput
+}
+
+input BedPriceWhereInput {
+  id: IntFilter
+  avg: IntFilter
+  beds: StringFilter
+  count: IntFilter
+  sqftAvg: IntFilter
+  locationStatsId: IntFilter
+  locationStats: LocationStatsRelationFilter
+  AND: [BedPriceWhereInput!]
+  OR: [BedPriceWhereInput!]
+  NOT: [BedPriceWhereInput!]
+}
+
+input LocationStatsRelationFilter {
+  is: LocationStatsWhereInput
+  isNot: LocationStatsWhereInput
+}
+
+input LocationStatsOrderByWithRelationInput {
+  id: SortOrder
+  totalHomes: SortOrder
+  lat: SortOrder
+  lng: SortOrder
+  priceSqft: SortOrder
+  type: SortOrder
+  bedsPrice: BedPriceOrderByRelationAggregateInput
+}
+
+input BedPriceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+enum LocationStatsScalarFieldEnum {
+  id
+  totalHomes
+  lat
+  lng
+  priceSqft
+  type
+}
+
+input LocationStatsWhereUniqueInput {
+  id: Int
+}
+
+input BedPriceOrderByWithRelationInput {
+  id: SortOrder
+  avg: SortOrder
+  beds: SortOrder
+  count: SortOrder
+  sqftAvg: SortOrder
+  locationStatsId: SortOrder
+  locationStats: LocationStatsOrderByWithRelationInput
+}
+
+enum BedPriceScalarFieldEnum {
+  id
+  avg
+  beds
+  count
+  sqftAvg
+  locationStatsId
+}
+
+input BedPriceWhereUniqueInput {
+  id: Int
 }
 
 type Mutation {
-  createItem(createItemInput: CreateItemInput!): Item!
-  updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: Int!): Item!
+  createSeller(createSellerInput: CreateSellerInput!): Seller!
+  updateSeller(updateSellerInput: UpdateSellerInput!): Seller!
+  removeSeller(where: SellerWhereUniqueInput): Seller!
+  createBuyer(createBuyerInput: CreateBuyerInput!): Buyer!
+  updateBuyer(updateBuyerInput: UpdateBuyerInput!): Buyer!
+  removeBuyer(where: BuyerWhereUniqueInput): Buyer!
+  createAgent(createAgentInput: CreateAgentInput!): Agent!
+  updateAgent(updateAgentInput: UpdateAgentInput!): Agent!
+  removeAgent(where: AgentWhereUniqueInput): Agent!
+  createProperty(createPropertyInput: CreatePropertyInput!): Property!
+  updateProperty(updatePropertyInput: UpdatePropertyInput!): Property!
+  removeProperty(where: PropertyWhereUniqueInput): Property!
+  createMessage(createMessageInput: CreateMessageInput!): Message!
+  removeMessage(where: MessageWhereUniqueInput): Message!
+  createUserHome(createUserHomeInput: CreateUserHomeInput!): UserHome!
+  updateUserHome(updateUserHomeInput: UpdateUserHomeInput!): UserHome!
+  removeUserHome(where: UserHomeWhereUniqueInput): UserHome!
+  createView(createViewInput: CreateViewInput!): View!
+  updateView(updateViewInput: UpdateViewInput!): View!
+  removeView(where: ViewWhereUniqueInput): View!
+  createLocationStats(createLocationStatsInput: CreateLocationStatsInput!): LocationStats!
+  updateLocationStats(updateLocationStatsInput: UpdateLocationStatsInput!): LocationStats!
+  removeLocationStats(where: LocationStatsWhereUniqueInput): LocationStats!
+  createBedPrice(createBedPriceInput: CreateBedPriceInput!): BedPrice!
+  updateBedPrice(updateBedPriceInput: UpdateBedPriceInput!): BedPrice!
+  removeBedPrice(where: BedPriceWhereUniqueInput): BedPrice!
 }
 
-input CreateItemInput {
-  name: String!
-  quantity: Int!
+input CreateSellerInput {
+  uid: String!
 }
 
-input UpdateItemInput {
-  name: String
-  quantity: Int
+input UpdateSellerInput {
+  uid: String!
+}
+
+input CreateBuyerInput {
+  uid: String!
+}
+
+input UpdateBuyerInput {
+  uid: String!
+}
+
+input CreateAgentInput {
+  uid: String!
+}
+
+input UpdateAgentInput {
+  uid: String!
+}
+
+input CreatePropertyInput {
+  description: String
+  features: String
+  facts: String
+  style: Style
+  priceSqft: Int
+  beds: Int
+  bath: Int
+  sellerUid: String!
+  lat: Int!
+  lng: Int!
+  lotSize: Int!
+  city: String!
+  state: String!
+  address: String!
+  sqft: Int!
+  price: Int!
+  yearBuilt: Int!
+  zipcode: String!
+  imgs: [String!]!
+  plan: Int!
+  published: Boolean!
+}
+
+input UpdatePropertyInput {
+  description: String
+  features: String
+  facts: String
+  style: Style
+  priceSqft: Int
+  beds: Int
+  bath: Int
+  sellerUid: String
+  lat: Int
+  lng: Int
+  lotSize: Int
+  city: String
+  state: String
+  address: String
+  sqft: Int
+  price: Int
+  yearBuilt: Int
+  zipcode: String
+  imgs: [String!]
+  plan: Int
+  published: Boolean
+  id: Int!
+}
+
+input CreateMessageInput {
+  buyerUid: String
+  agentUid: String
+  sellerUid: String
+  message: String!
+  propertyId: Int!
+}
+
+input CreateUserHomeInput {
+  type: UserHomeType!
+  propertyId: Int!
+  buyerUid: String!
+}
+
+input UpdateUserHomeInput {
+  type: UserHomeType
+  propertyId: Int
+  buyerUid: String
+  buyerUid_propertyId: UserHomeBuyerUidPropertyIdCompoundUniqueInput
+}
+
+input CreateViewInput {
+  propertyId: Int!
+  buyerUid: String!
+}
+
+input UpdateViewInput {
+  propertyId: Int
+  buyerUid: String
+  id: Int!
+}
+
+input CreateLocationStatsInput {
+  type: LocationStatsType
+  totalHomes: Int!
+  lat: Int!
+  lng: Int!
+  priceSqft: Int!
+}
+
+input UpdateLocationStatsInput {
+  type: LocationStatsType
+  totalHomes: Int
+  lat: Int
+  lng: Int
+  priceSqft: Int
+  id: Int!
+}
+
+input CreateBedPriceInput {
+  avg: Int!
+  beds: String!
+  count: Int!
+  sqftAvg: Int!
+  locationStatsId: Int!
+}
+
+input UpdateBedPriceInput {
+  avg: Int
+  beds: String
+  count: Int
+  sqftAvg: Int
+  locationStatsId: Int
   id: Int!
 }

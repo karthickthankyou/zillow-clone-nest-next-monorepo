@@ -18,9 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "resource": "npx ts-node-dev src/common/generators"
   },
   "dependencies": {
+    "@zillow-org/types": "*",
     "@apollo/server": "^4.5.0",
     "@nestjs/apollo": "^11.0.4",
     "@nestjs/common": "^9.0.0",
@@ -43,9 +45,11 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "change-case": "^4.1.2",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "firebase-admin": "^11.5.0",
     "jest": "29.3.1",
     "prettier": "^2.3.2",
     "prisma": "^4.12.0",
