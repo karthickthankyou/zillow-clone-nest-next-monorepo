@@ -29,6 +29,7 @@ import { AuthModule } from './common/auth/auth.module'
       buildSchemaOptions: {
         numberScalarMode: 'integer',
       },
+      introspection: true,
     }),
     PrismaModule,
     FirebaseModule,
