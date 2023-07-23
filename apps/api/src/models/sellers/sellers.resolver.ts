@@ -70,7 +70,7 @@ export class SellersResolver {
     return this.sellersService.remove(args)
   }
 
-  @ResolveField(() => [Property])
+  @ResolveField(() => [Property], { nullable: true })
   properties(@Parent() parent: Seller) {
     return this.prisma.property.findMany({
       where: { sellerUid: { equals: parent.uid } },
@@ -78,7 +78,7 @@ export class SellersResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [GroupedMessages])
+  @ResolveField(() => [GroupedMessages], { nullable: true })
   async messages(@Parent() parent: Seller, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, parent.uid)
     const groupedMessages = (await this.prisma.$queryRaw`

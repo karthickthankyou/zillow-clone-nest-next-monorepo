@@ -71,7 +71,7 @@ export class BuyersResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [GroupedMessages])
+  @ResolveField(() => [GroupedMessages], { nullable: true })
   async messages(@Parent() parent: Buyer, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, parent.uid)
 
@@ -89,19 +89,19 @@ export class BuyersResolver {
     })
   }
   @AllowAuthenticated()
-  @ResolveField(() => [View])
+  @ResolveField(() => [View], { nullable: true })
   async views(@Parent() parent: Buyer, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, parent.uid)
 
     return this.prisma.view.findMany({
       where: { buyerUid: parent.uid },
       distinct: ['propertyId'],
-      orderBy: [{ createdAt: 'desc' }],
+      orderBy: [{ updatedAt: 'desc' }],
     })
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [UserHome])
+  @ResolveField(() => [UserHome], { nullable: true })
   async interests(@Parent() parent: Buyer, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, parent.uid)
 

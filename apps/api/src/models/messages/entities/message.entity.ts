@@ -14,7 +14,6 @@ export class Message implements MessageType {
   agentUid: string
   @Field(() => String, { nullable: true })
   sellerUid: string
-  // Todo fill all properties
 }
 
 @ObjectType()

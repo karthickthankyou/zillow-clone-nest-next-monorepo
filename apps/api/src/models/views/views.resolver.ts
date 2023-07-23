@@ -78,13 +78,13 @@ export class ViewsResolver {
     return this.viewsService.remove(args)
   }
 
-  @ResolveField(() => Property)
+  @ResolveField(() => Property, { nullable: true })
   async property(@Parent() parent: View) {
     return this.prisma.property.findUnique({
       where: { id: parent.propertyId },
     })
   }
-  @ResolveField(() => Property)
+  @ResolveField(() => Property, { nullable: true })
   async buyer(@Parent() parent: View) {
     return this.prisma.buyer.findUnique({
       where: { uid: parent.buyerUid },

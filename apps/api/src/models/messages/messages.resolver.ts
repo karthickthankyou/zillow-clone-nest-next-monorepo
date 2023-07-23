@@ -82,7 +82,7 @@ export class MessagesResolver {
     return this.messagesService.remove(args)
   }
 
-  @ResolveField(() => Property)
+  @ResolveField(() => Property, { nullable: true })
   async property(@Parent() parent: Message) {
     return this.prisma.property.findUnique({
       where: { id: parent.propertyId },

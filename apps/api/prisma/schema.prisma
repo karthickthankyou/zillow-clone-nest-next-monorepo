@@ -11,12 +11,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Item {
-    id       Int     @id @default(autoincrement())
-    name     String?
-    quantity Int?
-}
-
 model Seller {
     uid       String   @id
     createdAt DateTime @default(now())

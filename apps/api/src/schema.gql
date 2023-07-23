@@ -43,7 +43,6 @@ type Property {
   priceSqft: Int
   beds: Int
   bath: Int
-  sellerUid: String!
   id: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -60,6 +59,7 @@ type Property {
   imgs: [String!]!
   plan: Int!
   published: Boolean!
+  sellerUid: String!
   seller: Seller!
   agents: [Agent!]!
   userHomes: [UserHome!]!
@@ -147,23 +147,86 @@ type BedPrice {
 }
 
 type Query {
-  sellers(where: SellerWhereInput, orderBy: [SellerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [SellerScalarFieldEnum!]): [Seller!]!
+  sellers(
+    where: SellerWhereInput
+    orderBy: [SellerOrderByWithRelationInput!]
+    cursor: WhereUniqueInputUid
+    take: Int
+    skip: Int
+    distinct: [SellerScalarFieldEnum!]
+  ): [Seller!]!
   seller(where: SellerWhereUniqueInput): Seller!
-  buyers(where: BuyerWhereInput, orderBy: [BuyerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [BuyerScalarFieldEnum!]): [Buyer!]!
+  buyers(
+    where: BuyerWhereInput
+    orderBy: [BuyerOrderByWithRelationInput!]
+    cursor: WhereUniqueInputUid
+    take: Int
+    skip: Int
+    distinct: [BuyerScalarFieldEnum!]
+  ): [Buyer!]!
   buyer(where: BuyerWhereUniqueInput): Buyer!
-  agents(where: AgentWhereInput, orderBy: [AgentOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [AgentScalarFieldEnum!]): [Agent!]!
+  agents(
+    where: AgentWhereInput
+    orderBy: [AgentOrderByWithRelationInput!]
+    cursor: WhereUniqueInputUid
+    take: Int
+    skip: Int
+    distinct: [AgentScalarFieldEnum!]
+  ): [Agent!]!
   agent(where: AgentWhereUniqueInput): Agent!
-  properties(where: PropertyWhereInput, orderBy: [PropertyOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [PropertyScalarFieldEnum!]): [Property!]!
+  properties(
+    where: PropertyWhereInput
+    orderBy: [PropertyOrderByWithRelationInput!]
+    cursor: WhereUniqueInputNumber
+    take: Int
+    skip: Int
+    distinct: [PropertyScalarFieldEnum!]
+  ): [Property!]!
   property(where: PropertyWhereUniqueInput): Property!
-  messages(where: MessageWhereInput, orderBy: [MessageOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [MessageScalarFieldEnum!]): [Message!]!
+  messages(
+    where: MessageWhereInput
+    orderBy: [MessageOrderByWithRelationInput!]
+    cursor: WhereUniqueInputNumber
+    take: Int
+    skip: Int
+    distinct: [MessageScalarFieldEnum!]
+  ): [Message!]!
   message(where: MessageWhereUniqueInput): Message!
-  userHomes(where: UserHomeWhereInput, orderBy: [UserHomeOrderByWithRelationInput!], cursor: UserHomeWhereUniqueInput, take: Int, skip: Int, distinct: [UserHomeScalarFieldEnum!]): [UserHome!]!
+  userHomes(
+    where: UserHomeWhereInput
+    orderBy: [UserHomeOrderByWithRelationInput!]
+    cursor: UserHomeWhereUniqueInput
+    take: Int
+    skip: Int
+    distinct: [UserHomeScalarFieldEnum!]
+  ): [UserHome!]!
   userHome(where: UserHomeWhereUniqueInput): UserHome!
-  views(where: ViewWhereInput, orderBy: [ViewOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [ViewScalarFieldEnum!]): [View!]!
+  views(
+    where: ViewWhereInput
+    orderBy: [ViewOrderByWithRelationInput!]
+    cursor: WhereUniqueInputNumber
+    take: Int
+    skip: Int
+    distinct: [ViewScalarFieldEnum!]
+  ): [View!]!
   view(where: ViewWhereUniqueInput): View!
-  locationStats(where: LocationStatsWhereInput, orderBy: [LocationStatsOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [LocationStatsScalarFieldEnum!]): [LocationStats!]!
+  locationStats(
+    where: LocationStatsWhereInput
+    orderBy: [LocationStatsOrderByWithRelationInput!]
+    cursor: WhereUniqueInputNumber
+    take: Int
+    skip: Int
+    distinct: [LocationStatsScalarFieldEnum!]
+  ): [LocationStats!]!
   locationStat(where: LocationStatsWhereUniqueInput): LocationStats!
-  bedPrices(where: BedPriceWhereInput, orderBy: [BedPriceOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [BedPriceScalarFieldEnum!]): [BedPrice!]!
+  bedPrices(
+    where: BedPriceWhereInput
+    orderBy: [BedPriceOrderByWithRelationInput!]
+    cursor: WhereUniqueInputNumber
+    take: Int
+    skip: Int
+    distinct: [BedPriceScalarFieldEnum!]
+  ): [BedPrice!]!
   bedPrice(where: BedPriceWhereUniqueInput): BedPrice!
 }
 
@@ -731,8 +794,12 @@ type Mutation {
   createView(createViewInput: CreateViewInput!): View!
   updateView(updateViewInput: UpdateViewInput!): View!
   removeView(where: ViewWhereUniqueInput): View!
-  createLocationStats(createLocationStatsInput: CreateLocationStatsInput!): LocationStats!
-  updateLocationStats(updateLocationStatsInput: UpdateLocationStatsInput!): LocationStats!
+  createLocationStats(
+    createLocationStatsInput: CreateLocationStatsInput!
+  ): LocationStats!
+  updateLocationStats(
+    updateLocationStatsInput: UpdateLocationStatsInput!
+  ): LocationStats!
   removeLocationStats(where: LocationStatsWhereUniqueInput): LocationStats!
   createBedPrice(createBedPriceInput: CreateBedPriceInput!): BedPrice!
   updateBedPrice(updateBedPriceInput: UpdateBedPriceInput!): BedPrice!
@@ -771,7 +838,6 @@ input CreatePropertyInput {
   priceSqft: Int
   beds: Int
   bath: Int
-  sellerUid: String!
   lat: Int!
   lng: Int!
   lotSize: Int!
@@ -785,6 +851,7 @@ input CreatePropertyInput {
   imgs: [String!]!
   plan: Int!
   published: Boolean!
+  sellerUid: String!
 }
 
 input UpdatePropertyInput {
@@ -795,7 +862,6 @@ input UpdatePropertyInput {
   priceSqft: Int
   beds: Int
   bath: Int
-  sellerUid: String
   lat: Int
   lng: Int
   lotSize: Int
@@ -809,6 +875,7 @@ input UpdatePropertyInput {
   imgs: [String!]
   plan: Int
   published: Boolean
+  sellerUid: String
   id: Int!
 }
 

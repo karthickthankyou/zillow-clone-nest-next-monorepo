@@ -33,6 +33,5 @@ export class Property implements PropertyType {
   imgs: string[]
   plan: number
   published: boolean
-  @Field(() => String)
   sellerUid: string
 }

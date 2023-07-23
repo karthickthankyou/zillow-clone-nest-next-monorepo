@@ -68,7 +68,7 @@ export class AgentsResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [GroupedMessages])
+  @ResolveField(() => [GroupedMessages], { nullable: true })
   async messages(@Parent() parent: Agent, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, parent.uid)
 
@@ -86,7 +86,7 @@ export class AgentsResolver {
     })
   }
 
-  @ResolveField(() => [Property])
+  @ResolveField(() => [Property], { nullable: true })
   async properties(@Parent() parent: Agent) {
     return this.prisma.property.findMany({
       where: { agents: { some: { uid: parent.uid } } },

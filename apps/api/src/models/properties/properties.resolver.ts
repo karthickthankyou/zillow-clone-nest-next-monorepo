@@ -73,14 +73,14 @@ export class PropertiesResolver {
     return this.propertiesService.remove(args)
   }
 
-  @ResolveField(() => Seller)
+  @ResolveField(() => Seller, { nullable: true })
   seller(@Parent() parent: Property) {
     return this.prisma.seller.findUnique({
       where: { uid: parent.sellerUid },
     })
   }
 
-  @ResolveField(() => [Agent])
+  @ResolveField(() => [Agent], { nullable: true })
   agents(@Parent() parent: Property) {
     return this.prisma.agent.findMany({
       where: {
@@ -92,7 +92,7 @@ export class PropertiesResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [UserHome])
+  @ResolveField(() => [UserHome], { nullable: true })
   async userHomes(@Parent() parent: Property, @GetUser() user: GetUserType) {
     const property = await this.prisma.property.findUnique({
       where: { id: parent.id },
@@ -111,7 +111,7 @@ export class PropertiesResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [Message])
+  @ResolveField(() => [Message], { nullable: true })
   async messages(@Parent() parent: Property, @GetUser() user: GetUserType) {
     const property = await this.prisma.property.findUnique({
       where: { id: parent.id },
@@ -129,7 +129,7 @@ export class PropertiesResolver {
   }
 
   @AllowAuthenticated()
-  @ResolveField(() => [View])
+  @ResolveField(() => [View], { nullable: true })
   async views(@Parent() parent: Property, @GetUser() user: GetUserType) {
     const property = await this.prisma.property.findUnique({
       where: { id: parent.id },

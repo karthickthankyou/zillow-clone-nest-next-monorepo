@@ -71,13 +71,13 @@ export class UserHomesResolver {
     return this.userHomesService.remove(args)
   }
 
-  @ResolveField(() => Property)
+  @ResolveField(() => Property, { nullable: true })
   async property(@Parent() parent: UserHome) {
     return this.prisma.property.findUnique({
       where: { id: parent.propertyId },
     })
   }
-  @ResolveField(() => Property)
+  @ResolveField(() => Property, { nullable: true })
   async buyer(@Parent() parent: UserHome) {
     return this.prisma.buyer.findUnique({
       where: { uid: parent.buyerUid },
