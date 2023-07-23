@@ -6,8 +6,8 @@ type Agent {
   uid: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  messages: [GroupedMessages!]!
-  properties: [Property!]!
+  messages: [GroupedMessages!]
+  properties: [Property!]
 }
 
 """
@@ -24,7 +24,7 @@ type Message {
   updatedAt: DateTime!
   message: String!
   propertyId: Int!
-  property: Property!
+  property: Property
   buyer: Buyer
   agent: Agent
   seller: Seller
@@ -60,11 +60,11 @@ type Property {
   plan: Int!
   published: Boolean!
   sellerUid: String!
-  seller: Seller!
-  agents: [Agent!]!
-  userHomes: [UserHome!]!
-  messages: [Message!]!
-  views: [View!]!
+  seller: Seller
+  agents: [Agent!]
+  userHomes: [UserHome!]
+  messages: [Message!]
+  views: [View!]
 }
 
 enum Style {
@@ -84,9 +84,9 @@ type Buyer {
   uid: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  messages: [GroupedMessages!]!
-  views: [View!]!
-  interests: [UserHome!]!
+  messages: [GroupedMessages!]
+  views: [View!]
+  interests: [UserHome!]
 }
 
 type View {
@@ -95,8 +95,8 @@ type View {
   createdAt: DateTime!
   updatedAt: DateTime!
   buyerUid: String!
-  property: Property!
-  buyer: Property!
+  property: Property
+  buyer: Property
 }
 
 type UserHome {
@@ -106,8 +106,8 @@ type UserHome {
   updatedAt: DateTime!
   propertyId: Int!
   buyerUid: String!
-  property: Property!
-  buyer: Property!
+  property: Property
+  buyer: Property
 }
 
 enum UserHomeType {
@@ -119,8 +119,8 @@ type Seller {
   uid: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  properties: [Property!]!
-  messages: [GroupedMessages!]!
+  properties: [Property!]
+  messages: [GroupedMessages!]
 }
 
 type LocationStats {
@@ -146,87 +146,54 @@ type BedPrice {
   locationStatsId: Int!
 }
 
+type LoginOutput {
+  kind: String!
+  localId: String!
+  email: String!
+  displayName: String!
+  idToken: String!
+  refreshToken: String!
+  expiresIn: String!
+}
+
+type RegisterOutput {
+  kind: String!
+  localId: String!
+  email: String!
+  displayName: String!
+  idToken: String!
+  refreshToken: String!
+  expiresIn: String!
+}
+
+type RefreshTokenOutput {
+  access_token: String!
+  expires_in: String!
+  token_type: String!
+  refresh_token: String!
+  id_token: String!
+  user_id: String!
+  project_id: String!
+}
+
 type Query {
-  sellers(
-    where: SellerWhereInput
-    orderBy: [SellerOrderByWithRelationInput!]
-    cursor: WhereUniqueInputUid
-    take: Int
-    skip: Int
-    distinct: [SellerScalarFieldEnum!]
-  ): [Seller!]!
+  sellers(where: SellerWhereInput, orderBy: [SellerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [SellerScalarFieldEnum!]): [Seller!]!
   seller(where: SellerWhereUniqueInput): Seller!
-  buyers(
-    where: BuyerWhereInput
-    orderBy: [BuyerOrderByWithRelationInput!]
-    cursor: WhereUniqueInputUid
-    take: Int
-    skip: Int
-    distinct: [BuyerScalarFieldEnum!]
-  ): [Buyer!]!
+  buyers(where: BuyerWhereInput, orderBy: [BuyerOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [BuyerScalarFieldEnum!]): [Buyer!]!
   buyer(where: BuyerWhereUniqueInput): Buyer!
-  agents(
-    where: AgentWhereInput
-    orderBy: [AgentOrderByWithRelationInput!]
-    cursor: WhereUniqueInputUid
-    take: Int
-    skip: Int
-    distinct: [AgentScalarFieldEnum!]
-  ): [Agent!]!
+  agents(where: AgentWhereInput, orderBy: [AgentOrderByWithRelationInput!], cursor: WhereUniqueInputUid, take: Int, skip: Int, distinct: [AgentScalarFieldEnum!]): [Agent!]!
   agent(where: AgentWhereUniqueInput): Agent!
-  properties(
-    where: PropertyWhereInput
-    orderBy: [PropertyOrderByWithRelationInput!]
-    cursor: WhereUniqueInputNumber
-    take: Int
-    skip: Int
-    distinct: [PropertyScalarFieldEnum!]
-  ): [Property!]!
+  properties(where: PropertyWhereInput, orderBy: [PropertyOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [PropertyScalarFieldEnum!]): [Property!]!
   property(where: PropertyWhereUniqueInput): Property!
-  messages(
-    where: MessageWhereInput
-    orderBy: [MessageOrderByWithRelationInput!]
-    cursor: WhereUniqueInputNumber
-    take: Int
-    skip: Int
-    distinct: [MessageScalarFieldEnum!]
-  ): [Message!]!
+  messages(where: MessageWhereInput, orderBy: [MessageOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [MessageScalarFieldEnum!]): [Message!]!
   message(where: MessageWhereUniqueInput): Message!
-  userHomes(
-    where: UserHomeWhereInput
-    orderBy: [UserHomeOrderByWithRelationInput!]
-    cursor: UserHomeWhereUniqueInput
-    take: Int
-    skip: Int
-    distinct: [UserHomeScalarFieldEnum!]
-  ): [UserHome!]!
+  userHomes(where: UserHomeWhereInput, orderBy: [UserHomeOrderByWithRelationInput!], cursor: UserHomeWhereUniqueInput, take: Int, skip: Int, distinct: [UserHomeScalarFieldEnum!]): [UserHome!]!
   userHome(where: UserHomeWhereUniqueInput): UserHome!
-  views(
-    where: ViewWhereInput
-    orderBy: [ViewOrderByWithRelationInput!]
-    cursor: WhereUniqueInputNumber
-    take: Int
-    skip: Int
-    distinct: [ViewScalarFieldEnum!]
-  ): [View!]!
+  views(where: ViewWhereInput, orderBy: [ViewOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [ViewScalarFieldEnum!]): [View!]!
   view(where: ViewWhereUniqueInput): View!
-  locationStats(
-    where: LocationStatsWhereInput
-    orderBy: [LocationStatsOrderByWithRelationInput!]
-    cursor: WhereUniqueInputNumber
-    take: Int
-    skip: Int
-    distinct: [LocationStatsScalarFieldEnum!]
-  ): [LocationStats!]!
+  locationStats(where: LocationStatsWhereInput, orderBy: [LocationStatsOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [LocationStatsScalarFieldEnum!]): [LocationStats!]!
   locationStat(where: LocationStatsWhereUniqueInput): LocationStats!
-  bedPrices(
-    where: BedPriceWhereInput
-    orderBy: [BedPriceOrderByWithRelationInput!]
-    cursor: WhereUniqueInputNumber
-    take: Int
-    skip: Int
-    distinct: [BedPriceScalarFieldEnum!]
-  ): [BedPrice!]!
+  bedPrices(where: BedPriceWhereInput, orderBy: [BedPriceOrderByWithRelationInput!], cursor: WhereUniqueInputNumber, take: Int, skip: Int, distinct: [BedPriceScalarFieldEnum!]): [BedPrice!]!
   bedPrice(where: BedPriceWhereUniqueInput): BedPrice!
 }
 
@@ -774,6 +741,12 @@ input BedPriceWhereUniqueInput {
 }
 
 type Mutation {
+  login(credentials: LoginInput!): LoginOutput!
+  register(credentials: RegisterInput!): RegisterOutput!
+  logout: Boolean!
+  refreshToken(refreshTokenInput: RefreshTokenInput!): RefreshTokenOutput!
+  setRole(setRoleInput: SetRoleInput!): Boolean!
+  setAdmin(uid: String!): Boolean!
   createSeller(createSellerInput: CreateSellerInput!): Seller!
   updateSeller(updateSellerInput: UpdateSellerInput!): Seller!
   removeSeller(where: SellerWhereUniqueInput): Seller!
@@ -794,16 +767,38 @@ type Mutation {
   createView(createViewInput: CreateViewInput!): View!
   updateView(updateViewInput: UpdateViewInput!): View!
   removeView(where: ViewWhereUniqueInput): View!
-  createLocationStats(
-    createLocationStatsInput: CreateLocationStatsInput!
-  ): LocationStats!
-  updateLocationStats(
-    updateLocationStatsInput: UpdateLocationStatsInput!
-  ): LocationStats!
+  createLocationStats(createLocationStatsInput: CreateLocationStatsInput!): LocationStats!
+  updateLocationStats(updateLocationStatsInput: UpdateLocationStatsInput!): LocationStats!
   removeLocationStats(where: LocationStatsWhereUniqueInput): LocationStats!
   createBedPrice(createBedPriceInput: CreateBedPriceInput!): BedPrice!
   updateBedPrice(updateBedPriceInput: UpdateBedPriceInput!): BedPrice!
   removeBedPrice(where: BedPriceWhereUniqueInput): BedPrice!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  displayName: String
+}
+
+input RefreshTokenInput {
+  refresh_token: String!
+}
+
+input SetRoleInput {
+  uid: String!
+  role: RoleEnum!
+}
+
+"""Enum for roles"""
+enum RoleEnum {
+  admin
+  manager
 }
 
 input CreateSellerInput {

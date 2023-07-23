@@ -22,7 +22,6 @@
     "resource": "npx ts-node-dev src/common/generators"
   },
   "dependencies": {
-    "@zillow-org/types": "*",
     "@apollo/server": "^4.5.0",
     "@nestjs/apollo": "^11.0.4",
     "@nestjs/common": "^9.0.0",
@@ -31,6 +30,7 @@
     "@nestjs/graphql": "^11.0.4",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.12.0",
+    "@sentry/node": "^7.60.0",
     "graphql": "^16.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

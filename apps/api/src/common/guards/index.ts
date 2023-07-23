@@ -1,5 +1,5 @@
 import { ForbiddenException } from '@nestjs/common'
-import { GetUserType, Role } from '@zillow-org/types'
+import { GetUserType, Role } from 'src/common/types'
 
 export const checkRowLevelPermission = (
   user: GetUserType,

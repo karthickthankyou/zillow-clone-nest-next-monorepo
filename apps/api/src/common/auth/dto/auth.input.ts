@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql'
-import { Role } from '@zillow-org/types'
+import { Role } from 'src/common/types'
 
 @InputType()
 export class LoginInput {
@@ -66,7 +66,7 @@ export class RefreshTokenOutput {
 
 export enum RoleEnum {
   'admin' = 'admin',
-  'moderator' = 'moderator',
+  'manager' = 'manager',
 }
 
 registerEnumType(RoleEnum, { name: 'RoleEnum', description: 'Enum for roles' })

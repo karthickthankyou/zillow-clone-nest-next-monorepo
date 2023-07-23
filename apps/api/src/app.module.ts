@@ -18,6 +18,7 @@ import { UserHomesModule } from './models/user-homes/user-homes.module'
 import { ViewsModule } from './models/views/views.module'
 import { LocationStatsModule } from './models/location-stats/location-stats.module'
 import { BedPricesModule } from './models/bed-prices/bed-prices.module'
+import { AuthModule } from './common/auth/auth.module'
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { BedPricesModule } from './models/bed-prices/bed-prices.module'
     }),
     PrismaModule,
     FirebaseModule,
+    AuthModule,
 
     SellersModule,
     BuyersModule,
